@@ -14,17 +14,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurity {
+public class SpringSecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     private static final String[] ENDPOINTS_WHITELIST = {
             "/css/**",
-            "/",
             "/login",
-            "/home",
-            "/index",
             "/register/**",
             "/images/logo-ecommerce.png"
     };
@@ -43,7 +40,7 @@ public class SpringSecurity {
         http.csrf().disable()
                 .authorizeHttpRequests((requests) ->
                         requests.requestMatchers(ENDPOINTS_WHITELIST).permitAll()
-                                .requestMatchers("/users").hasRole("RECRUITER")
+                                .requestMatchers("/users").hasRole(RECRUITER)
                                 .anyRequest().authenticated()
                 ).formLogin(
                         form -> form

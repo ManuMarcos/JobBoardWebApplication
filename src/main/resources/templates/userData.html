@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title th:text="#{title.myData}">My Data</title>
+	<link th:replace="~{layout/libraries :: libraries}">
+</head>
+
+	<!-- Header -->
+	<div th:replace="~{layout/header :: header}"></div>
+
+	<!-- User Data -->
+	<div th:replace="~{layout/userDataForm :: userForm}"></div>
+
+
+</html>

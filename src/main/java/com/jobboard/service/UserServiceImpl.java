@@ -1,15 +1,16 @@
 package com.jobboard.service;
 
-import com.jobboard.dao.RoleDao;
-import com.jobboard.dao.UserDao;
-import com.jobboard.domain.Role;
-import com.jobboard.domain.User;
+import com.jobboard.dao.*;
+import com.jobboard.domain.*;
+import com.jobboard.dto.RoleDto;
+import com.jobboard.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +18,11 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private RecruiterDao recruiterDao;
+
+    @Autowired
+    private StudentDao studentDao;
 
     @Autowired
     private RoleDao roleDao;
@@ -26,14 +32,24 @@ public class UserServiceImpl implements UserService{
 
     @Transactional
     @Override
-    public void saveUser(User user, Role role) {
+    public void saveUser(UserDto userDto) {
         //Encrypt the password using Spring Security
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        Role existingRole = roleDao.findByName(role.getName());
-
-        user.setRoles(Arrays.asList(existingRole));
-        userDao.save(user);
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        String roleName = userDto.getRoles().get(0).getName();
+        Role existingRole = roleDao.findByName(roleName);
+        User user;
+        switch (roleName){
+            case ("ROLE_RECRUITER"):
+                user = new Recruiter(userDto.getEmail(), userDto.getPassword(), userDto.getFirstName(), userDto.getLastName(),
+                        existingRole);
+                userDao.save(user);
+                break;
+            case "ROLE_STUDENT":
+                user = new Student(userDto.getEmail(), userDto.getPassword(), userDto.getFirstName(), userDto.getLastName(),
+                        existingRole);
+                userDao.save(user);
+                break;
+        }
     }
 
     @Transactional(readOnly = true)
@@ -46,5 +62,8 @@ public class UserServiceImpl implements UserService{
     public List<User> findAllUsers() {
         return userDao.findAll();
     }
+
+
+
 
 }

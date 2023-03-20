@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <div th:fragment="jobOfferInfo" class="container card mt-3" >
+    <!-- Company Logo -->
+    <img th:src="${jobOffer.companyLogoLink}" id="company-logo-img" class="rounded mx-auto d-block img-fluid" th:alt="${jobOffer.title} + Image">
+    <!-- Title -->
+    <h3 th:text="${jobOffer.title}"></h3>
+    <!-- Description -->
+    <p th:text="${jobOffer.description}"></p>
+    <!-- Company Name -->
+    <strong th:text="${jobOffer.company}"></strong>
+    <!-- Created at -->
+    <span th:text="${jobOffer.createdAt}"></span>
+    <!-- Recruiter Email -->
+    <span th:text="${jobOffer.recruiterEmail}"></span>
+    <!-- Buttons -->
+    <form sec:authorize="hasRole('STUDENT')" method="post" th:action="@{/apply}">
+      <input hidden th:value="${jobOffer.id}" name="jobOfferId">
+      <button th:type="submit" class="btn btn-primary" th:text="#{action.apply}"></button>
+      <a href="javascript:history.back()" class="btn btn-secondary" th:text="#{action.cancel}"></a>
+    </form>
+  </div>
+
+
+
+
+</html>

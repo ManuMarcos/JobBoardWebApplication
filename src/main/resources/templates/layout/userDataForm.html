@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:fragment="userForm" class="container mt-4">
+  <form  method="post" action="/userData/save" th:object="${user}">
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="userEmail" th:text="#{label.email}" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="userEmail" th:field="*{email}">
+    </div>
+    <!-- First Name -->
+    <div class="mb-3">
+      <label for="firstName" th:text="#{label.firstName}" class="form-label">First Name</label>
+      <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+    </div>
+    <!-- Last Name -->
+    <div class="mb-3">
+      <label for="lastName" th:text="#{label.lastName}" class="form-label">Last Name</label>
+      <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+    </div>
+  
+  
+    <!-- ONLY STUDENTS SECTION -->
+    <!-- Presentation Letter -->
+    <div sec:authorize="hasRole('STUDENT')" class="mb-3">
+      <label for="presentationLetter" th:text="#{label.presentationLetter}" class="form-label">Presentation Letter</label>
+      <textarea class="form-control" th:name="*{presentationLetter}" id="presentationLetter" cols="30" rows="10"></textarea>
+    </div>
+    <!-- Career -->
+    <div sec:authorize="hasRole('STUDENT')" class="mb-3">
+      <label for="studentCareerSelect" th:text="#{label.career}" class="form-label">Career</label>
+      <select class="form-select" id="studentCareerSelect" th:field="*{career}">
+        <option th:each="career : ${careers}" th:value="${career.id}" th:text="${career.name}"></option>
+      </select>
+    </div>
+  
+    <!-- ONLY RECRUITERS SECTION -->
+    <!-- Company -->
+    <div sec:authorize="hasRole('RECRUITER')"  class="mb-3">
+      <label for="recruiterCompany" th:text="#{label.company}" class="form-label">Company</label>
+      <input type="text" class="form-control" id="recruiterCompany" th:field="*{company}">
+    </div>
+  </form>
+</div>
+
+
+</html>

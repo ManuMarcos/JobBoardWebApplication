@@ -16,8 +16,15 @@ public class Role implements Serializable {
     private Integer id;
 
     @Column(nullable = false, unique = true)
-    String name;
+    private String name;
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
+
+    public Role(){}
+
+    public Role(Integer id, String name){
+        this.id = id;
+        this.name = name;
+    }
 }

@@ -103,7 +103,7 @@
 					<div class="mb-3">
 						<label for="roleSelect" th:text="#{form.selectRole}"></label>
 						<select class="form-select" id="roleSelect" th:object="${role}" th:field="*{name}">
-							<option th:each="roleI : ${roles}" th:value="${roleI.name}" th:text="${roleI.name}"></option>
+							<option th:each="roleI : ${existingRoles}" th:value="${roleI.name}" th:text="${roleI.name}"></option>
 						</select>
 					</div>
 					<div class="form-group">

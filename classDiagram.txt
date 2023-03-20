@@ -1,0 +1,60 @@
+@startuml
+
+class User{
+- email : String
+- firstName : String
+- lastName : String
+- password : String
+- roles : List<Role>
+}
+
+class Role{
+- name : String
+- users : List<User>
+}
+
+class Student extends User{
+- presentationLetter : String
+- career : Career
+}
+
+class Recruiter extends User{
+- company : String
+- jobOffers : List<JobOffer>  
+}
+
+class JobOffer {
+- title : String
+- description : String
+- companyLogoLink : String
+- createdAt : Date
+- recruiter : Recruiter
+}
+
+class JobApplication{
+- student : Student
+- jobOffer : JobOffer
+- date : Date
+}
+
+class Career{
+- name : String
+}
+
+class JobExperience{
+- startDate : Date
+- finishDate : Date
+- description : String
+- student : Student
+}
+
+
+User "*" --* "1..*" Role : has
+Career "1" --o "*" Student : study
+Student "1" *-- "*" JobExperience : has
+Recruiter "1" *-- "*" JobOffer : publish
+Student "*" - "*" JobOffer : apply
+(Student, JobOffer) .. JobApplication
+
+
+@enduml

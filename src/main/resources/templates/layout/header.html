@@ -7,9 +7,9 @@
 			<!-- Columna Izquierda -->
 			<div class="col">
 				<nav class="d-flex" id="header-navbar">
-					<a class="p-2 header-link" th:href="@{/}" th:text="#{link.home}">Home</a>
+					<a class="p-2 header-link" sec:authorize="isAuthenticated()" th:href="@{/}" th:text="#{link.home}">Home</a>
 					<a class="p-2 header-link" sec:authorize="hasRole('RECRUITER')" th:href="@{/posts}" th:text="#{link.posts}">My Posts</a>
-					<a class="p-2 header-link" th:text="#{link.profile}">My Profile</a>
+					<a class="p-2 header-link" sec:authorize="isAuthenticated()" th:href="@{/userData}" th:text="#{link.profile}">My Profile</a>
 					<a class="p-2 header-link" sec:authorize="hasRole('STUDENT')" th:href="@{/jobsApplied}" th:text="#{link.jobsApplied}">Jobs Applied</a>
 				</nav>
 			</div>
@@ -19,7 +19,7 @@
 			</div>
 			<!-- Columna Derecha -->
 			<div class="col d-flex flex-row-reverse">
-				<a id="logout-icon" class="fa-solid fa-right-from-bracket fa-2xl" th:href="@{/logout}"></a>
+				<a id="logout-icon" sec:authorize="isAuthenticated()" class="fa-solid fa-right-from-bracket fa-2xl" th:href="@{/logout}"></a>
 			</div>
 		</div>
 	</header>

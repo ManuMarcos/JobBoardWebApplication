@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <div th:fragment="jobOfferForm" th:object="${jobOffer}">
+    <form th:action="@{/posts/save}" method="post">
+      <!-- Title -->
+      <div class="mb-3">
+        <label for="jobOfferTitleInput" class="form-label" th:text="#{label.jobOfferTitle}">Title</label>
+        <input type="text" th:field="*{title}" class="form-control" id="jobOfferTitleInput">
+      </div>
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="jobOfferDescription" class="form-label" th:text="#{label.jobOfferDescription}">Description</label>
+        <input type="text" th:field="*{description}" class="form-control" id="jobOfferDescription">
+      </div>
+      <!-- Company Logo Link -->
+      <div class="mb-3">
+        <label for="jobOfferLogoCompanyLink" class="form-label" th:text="#{label.jobOfferLogoCompanyLink}">Logo Company Link</label>
+        <input type="text" th:field="*{companyLogoLink}" class="form-control" id="jobOfferLogoCompanyLink">
+      </div>
+      <button type="submit" class="btn btn-primary" th:text="#{action.post}"></button>
+    </form>
+  </div>
+
+
+</html>

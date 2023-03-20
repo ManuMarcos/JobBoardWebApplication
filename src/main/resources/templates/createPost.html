@@ -2,22 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="#{title.login}">Login</title>
+  <title th:text="#{title.createPost}">New Post</title>
   <link th:replace="~{layout/libraries :: libraries}">
 </head>
 <body class="page-container">
   <div class="content-wrap">
     <!-- Header -->
     <div th:replace="~{layout/header :: header}"></div>
-    <!-- Login Form -->
-    <div class="container-fluid col-6 mt-5 card" id="card-login-form">
-      <div th:replace="~{layout/loginForm :: loginForm}"></div>
+    
+    <div class="container col-8 mt-5" >
+      <!-- Job Offer Form -->
+      <div th:replace="~{layout/jobOfferForm :: jobOfferForm}"></div>
     </div>
   </div>
-  
-  <!-- Footer -->
-  
 
+  <!-- Footer -->
 
 </body>
 </html>

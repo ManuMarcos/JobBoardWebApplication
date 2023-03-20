@@ -1,6 +1,6 @@
 package com.jobboard.service;
 
-import com.jobboard.dao.UserDao;
+import com.jobboard.dao.UserBaseDao;
 import com.jobboard.domain.Role;
 import com.jobboard.domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserDao userDao;
+    private UserBaseDao userDao;
 
 
     @Override
@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
                 .collect(Collectors.toList());
     }
 
