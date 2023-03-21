@@ -1,5 +1,6 @@
 package com.jobboard.domain;
 
+import com.jobboard.dto.JobApplicationDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,6 +38,8 @@ public class Student extends User {
 
     public Student() {
     }
+
+
 
 
 }

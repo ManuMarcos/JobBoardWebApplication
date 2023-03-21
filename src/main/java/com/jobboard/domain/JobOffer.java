@@ -1,6 +1,7 @@
 package com.jobboard.domain;
 
 
+import com.jobboard.enumerations.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,14 +25,18 @@ public class JobOffer implements Serializable {
     @Column(name = "company_logo_link")
     private String companyLogoLink;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Date createdAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.OPEN;
 
     @ManyToOne
     @JoinColumn(name = "recruiter_id", nullable = false)
     private Recruiter recruiter;
 
-    @OneToMany(mappedBy = "jobOffer")
+    @OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobApplication> applications;
 
     public JobOffer(){}
@@ -52,4 +57,5 @@ public class JobOffer implements Serializable {
         this.createdAt = createdAt;
         this.recruiter = recruiter;
     }
+
 }

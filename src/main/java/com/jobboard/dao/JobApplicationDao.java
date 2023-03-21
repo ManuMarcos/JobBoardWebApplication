@@ -15,4 +15,8 @@ public interface JobApplicationDao extends JpaRepository<JobApplication, Integer
     @Query(value = "SELECT * FROM job_application ja WHERE ja.student_id = ?1 ",
     nativeQuery = true)
     List<JobApplication> findJobApplicationsByStudentId(Integer studentId);
+
+    @Query(value = "SELECT * FROM job_application ja WHERE ja.job_offer_id = ?1",
+    nativeQuery = true)
+    List<JobApplication> findJobApplicationsByJobOfferId(Integer jobOfferId);
 }

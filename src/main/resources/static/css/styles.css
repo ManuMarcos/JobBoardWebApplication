@@ -76,4 +76,15 @@
     max-height: 300px;
 }
 
+#job-offer-card{
+    padding: 1rem 0.7rem;
+}
 
+.accordion-button{
+    border: 0.3rem solid rgba(211, 211, 211, 0.75);
+    border-radius: 8px 8px 8px 8px !important;
+}
+
+#job-offer-applied-badge{
+
+}

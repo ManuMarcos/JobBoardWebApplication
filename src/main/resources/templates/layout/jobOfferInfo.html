@@ -1,28 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-  <div th:fragment="jobOfferInfo" class="container card mt-3" >
+  <div th:fragment="jobOfferInfo" id="job-offer-card" class="container card mt-3" >
     <!-- Company Logo -->
-    <img th:src="${jobOffer.companyLogoLink}" id="company-logo-img" class="rounded mx-auto d-block img-fluid" th:alt="${jobOffer.title} + Image">
+    <img th:src="${jobOffer.companyLogoLink}" id="company-logo-img" class="rounded mx-auto d-block img-fluid mb-3" th:alt="${jobOffer.title} + Image">
+    
     <!-- Title -->
     <h3 th:text="${jobOffer.title}"></h3>
+    
     <!-- Description -->
     <p th:text="${jobOffer.description}"></p>
+    
     <!-- Company Name -->
     <strong th:text="${jobOffer.company}"></strong>
+    
     <!-- Created at -->
-    <span th:text="${jobOffer.createdAt}"></span>
+    <span th:text="#{label.publicationDate} + ': '" th:remove="tag"></span><span id="job-offer-publication-date" th:text="${jobOffer.createdAt}"></span>
+    
     <!-- Recruiter Email -->
-    <span th:text="${jobOffer.recruiterEmail}"></span>
+    <span th:text="#{label.recruiterEmail} + ': '" th:remove="tag"></span><span th:text="${jobOffer.recruiterEmail}"></span>
+    
+    <!-- Status -->
+    <h4><span class="badge text-bg-default" id="job-offer-status" th:name="${jobOffer.status}" th:text="${jobOffer.status}"></span></h4>
+    <h4><span sec:authorize="hasRole('STUDENT')" th:if="${applied}" class="badge text-bg-secondary" id="job-offer-applied-badge" th:text="#{label.applied}"></span></h4>
+    
     <!-- Buttons -->
-    <form sec:authorize="hasRole('STUDENT')" method="post" th:action="@{/apply}">
-      <input hidden th:value="${jobOffer.id}" name="jobOfferId">
+    <form sec:authorize="hasRole('STUDENT')" th:if="${!applied}" method="post" th:action="@{/apply}">
+      <input type="hidden" th:value="${jobOffer.id}" name="jobOfferId">
       <button th:type="submit" class="btn btn-primary" th:text="#{action.apply}"></button>
       <a href="javascript:history.back()" class="btn btn-secondary" th:text="#{action.cancel}"></a>
     </form>
+    
+    <form sec:authorize="hasRole('RECRUITER')" method="post" th:action="@{/delete}">
+      <input type="hidden" th:value="${jobOffer.id}" name="jobOfferId">
+      <button th:type="submit" class="btn btn-danger" th:text="#{action.delete}"></button>
+      <a href="javascript:history.back()" class="btn btn-secondary" th:text="#{action.cancel}"></a>
+    </form>
+  
+    <!-- Applications -->
+    <div sec:authorize="hasRole('RECRUITER')" class="accordion accordion-flush" id="accordion-applications">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" th:text="#{label.applications}"></button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordion-applications">
+          <div class="list-group list-group-horizontal mt-3" th:each="jobApplication : ${jobOffer.jobApplications}">
+            <a class="list-group-item list-group-item-action" th:href="@{/userInfo/{userId}(userId = ${jobApplication.student.id})}" th:text="${jobApplication.student.firstName} + ' - ' + ${jobApplication.student.lastName}"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    
   </div>
 
 
-
-
+  
 </html>

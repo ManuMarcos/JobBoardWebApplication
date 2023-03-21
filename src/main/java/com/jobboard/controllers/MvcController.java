@@ -63,8 +63,7 @@ public class MvcController {
     @PostMapping("/posts/save")
     public String saveJobOffer(@ModelAttribute("jobOffer") JobOfferDto jobOffer, Authentication authentication){
         log.info("Ejecutando MvcController - saveJobOffer");
-        //Date date = Calendar.getInstance().getTime();
-        //jobOffer.setCreatedAt((java.sql.Date) date);
+        jobOffer.setCreatedAt(new Date());
         jobOffer.setRecruiterEmail(authentication.getName());
         jobService.saveJobOffer(jobOffer);
         return "myPosts";
@@ -72,6 +71,7 @@ public class MvcController {
 
     @GetMapping("/posts/{postId}")
     public String showPost(@PathVariable("postId") Integer postId, Model model, Authentication authentication){
+        model.addAttribute("applied", jobService.studentHasApplied(authentication.getName(), postId));
         model.addAttribute("jobOffer", jobService.findJobOfferById(postId));
         return "jobOfferData";
     }

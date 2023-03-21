@@ -14,6 +14,8 @@ public interface JobService {
 
     List<JobApplication> findJobApplicationsByStudentEmail(String studentEmail);
 
+    List<JobApplication> findJobApplicationsByJobOfferId(Integer jobOfferId);
+
     void saveJobOffer(JobOfferDto jobOfferDto);
 
     void deleteJobOffer(Integer jobOfferId);
@@ -22,6 +24,7 @@ public interface JobService {
 
     void saveJobApplication(Integer jobOfferId, String studentEmail);
 
+    boolean studentHasApplied(String studentEmail, Integer jobOfferId);
 
 
 
